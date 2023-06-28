@@ -19,3 +19,7 @@ Set optins:
   How many characters you want to strip from the name of the selected object from the start.
   How many characters you want to strip from the end of the name of the selected object.
 Click the appropriate button to create new objects.
+
+Install:
+Put the script in the "Documents\maya\# maya version\scripts" folder.
+Add "AddNewObjBySelectUI()" to shelf.
