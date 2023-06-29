@@ -21,5 +21,5 @@ Set optins:
 Click the appropriate button to create new objects.
 
 Install:
-Put the script in the "Documents\maya\# maya version\scripts" folder.
-Add "AddNewObjBySelectUI()" to shelf.
+On Windows, scripts are placed under C:\Users\USER_NAME\Documents\maya\#mayaVersion\scripts.
+Add to shelf command: AddNewObjBySelectUI()
