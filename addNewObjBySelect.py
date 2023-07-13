@@ -1,4 +1,4 @@
-# Copyright © 2019 Oleksii Zinchenko. All rights reserved.
+# Copyright 2019 Oleksii Zinchenko. All rights reserved.
 # Tool for create the new object by selection.
 
 import maya.cmds as cmds
@@ -85,7 +85,7 @@ def anoClear(t):
 
 def get_name(a, cutStart, cutEnd, pref, ident, num, suff, type):
     if a:
-        if num or type == 4:
+        if type == 4:
             a = ''
         else:
             if cutStart and cutEnd:
@@ -96,24 +96,17 @@ def get_name(a, cutStart, cutEnd, pref, ident, num, suff, type):
                 a = a[:cutEnd * (-1)]
 
     if pref:
-        if type != 4:
+        if (type != 4 and a) or (type == 4 and (ident or num or suff)):
             pref = ('%s_' % pref)
-    else:
-        pref = ''
 
-    if ident:
-        if (num and pref) or not num:
-            ident = ('_%s' % ident)
+    if ident and a:
+        ident = ('_%s' % ident)
 
-    if num:
+    if num and (a or ident):
         num = ('_%s' % num)
-    else:
-        num = ''
 
-    if suff:
+    if suff and (a or ident or num):
         suff = ('_%s' % suff)
-    else:
-        suff = ''
 
     return ('%s%s%s%s%s' % (pref, a, ident, num, suff))
 
@@ -162,13 +155,13 @@ def anoAddNewObj(type):
                         else:
                             num = str(i)
                             for n in range(0, (len(str(len(t) - 1)) - 1), 1):
-                                num = ('0' + num)
+                                num = ('0%s' % num)
 
                     tmp = t[i].split('|')[-1]
                     ns = tmp[:((len(t[0].split(':')[-1]) + 1) * (-1))]
                     root = tmp.split(':')[-1]
                     name = get_name(root, cutStart, cutEnd, pref, ident, num, suff, type)
-                    if use_namespace:
+                    if use_namespace and type != 4:
                         name = ('%s:%s' % (ns, name))
 
                     if cmds.objExists(name):
@@ -191,16 +184,14 @@ def anoAddNewObj(type):
                         ref = 0
 
                         if type:
-                            ref += 1
-                        else:
-                            p = cmds.listRelatives(a, p=True, c=False, f=True, typ='transform')
-                            ref2 = 0
+                            p = cmds.listRelatives(a, p=False, c=True, f=True, typ='transform')
                             if p:
                                 if cmds.referenceQuery(p[0], inr=True):
-                                    ref2 += 1
-
-                            if cmds.referenceQuery(a, inr=True):
-                                if ref2:
+                                    ref += 1
+                        else:
+                            p = cmds.listRelatives(a, p=True, c=False, f=True, typ='transform')
+                            if p:
+                                if cmds.referenceQuery(p[0], inr=True):
                                     ref += 1
 
                         if ref:
