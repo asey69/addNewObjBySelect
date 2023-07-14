@@ -145,7 +145,7 @@ def anoAddNewObj(type):
     if t:
         if type == 4:
             if not pref and not ident and not suff:
-                print('// Warning! Please fill name UI and try agane!')
+                cmds.warning('// Warning! Please fill name UI and try agane!')
             else:
                 num = ''
                 for i in range(0, len(t), 1):
@@ -165,7 +165,7 @@ def anoAddNewObj(type):
                         name = ('%s:%s' % (ns, name))
 
                     if cmds.objExists(name):
-                        print('// Warning! Object %s really exists!' % name)
+                        cmds.warning('// Warning! Object %s really exists!' % name)
                     else:
                         add_object(name, objtype, t[i])
         else:
@@ -178,7 +178,7 @@ def anoAddNewObj(type):
                     name = ('%s:%s' % (ns, name))
 
                 if cmds.objExists(name):
-                    print('// Warning! Object %s really exists!' % name)
+                    cmds.warning('// Warning! Object %s really exists!' % name)
                 else:
                     if not type or type == 1:
                         ref = 0
@@ -195,7 +195,7 @@ def anoAddNewObj(type):
                                     ref += 1
 
                         if ref:
-                            print('// Warning! Object %s is referenced and can not be reparented!' % name)
+                            cmds.warning('// Warning! Object %s is referenced and can not be reparented!' % name)
                         else:
                             add_object(name, objtype, a)
                     else:
@@ -215,7 +215,7 @@ def anoAddNewObj(type):
                                     cmds.parent(c, name)
                             cmds.parent(name, a)
     else:
-        print('// Warning! Nothing selected!')
+        cmds.warning('// Warning! Nothing selected!')
 
 
 AddNewObjBySelectUI()
