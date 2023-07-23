@@ -31,7 +31,7 @@ Install:
 
 On Windows, scripts are placed under C:\Users\USER_NAME\Documents\maya\\#mayaVersion\scripts.
 
-Add to shelf command: 
+Add this command to shelf: 
 
 import os
 exec(open(os.path.join(os.environ['MAYA_SCRIPT_PATH'].split(';')[1], 'addNewObjBySelect.py')))
